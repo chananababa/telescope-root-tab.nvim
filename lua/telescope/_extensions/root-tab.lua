@@ -37,10 +37,6 @@ local get_ancestor_path_list = function(path)
     return path_list
 end
 
-local show_status = function()
-    print(vim.inspect(maps))
-end
-
 local set_working_directory = function(path)
     local current_tabpage = vim.api.nvim_get_current_tabpage()
     maps[current_tabpage] = path
@@ -55,7 +51,6 @@ end
 
 local handle_tabenter = function()
     change_working_directory()
-    show_status()
 end
 
 return require("telescope").register_extension({
