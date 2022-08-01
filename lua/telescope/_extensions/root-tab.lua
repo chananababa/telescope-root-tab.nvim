@@ -17,7 +17,7 @@ local get_current_path = function()
     return current_path
 end
 
-local function get_parent_path(path)
+local get_parent_path = function(path)
     local pattern1 = "^(.+)/"
     local pattern2 = "^(.+)\\"
 
