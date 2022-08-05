@@ -53,11 +53,49 @@ local handle_tabenter = function()
     change_working_directory()
 end
 
+local function tabline_path(path)
+    return path
+end
+
+local function tabline_label(path, config)
+    if path == nil then
+        return "No name"
+    end
+    if config.label_type == "path" then
+        return tabline_path(path)
+    end
+    return path
+end
+
+local function tabline()
+    local s = ""
+    for index = 1, vim.fn.tabpagenr("$") do
+        s = s .. "%" .. index .. "T"
+        if index == vim.fn.tabpagenr() then
+            s = s .. "%#TabLineSel#"
+        else
+            s = s .. "%#TabLine#"
+        end
+        local path = maps[index]
+        local config = {
+            label_type = "path",
+        }
+        s = s .. "[" .. tabline_label(path, config) .. "] "
+    end
+    return s
+end
+
 return require("telescope").register_extension({
     setup = function(ext_config)
+        function _G.nvim_tabline()
+            return tabline()
+        end
         vim.api.nvim_create_autocmd("TabEnter", {
             callback = handle_tabenter,
         })
+        vim.o.showtabline = 2
+        vim.o.tabline = "%!v:lua.nvim_tabline()"
+        vim.g.loaded_nvim_tabline = 1
     end,
     exports = {
         list = function(opts)
