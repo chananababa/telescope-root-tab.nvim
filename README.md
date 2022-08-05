@@ -1,4 +1,5 @@
 # Root Tab
 
 - [ ] Restructure directries
-- [ ] Add GUI for presenting the current root path
+- [x] Add GUI for presenting the current root path
+- [ ] Make tab display configurable
